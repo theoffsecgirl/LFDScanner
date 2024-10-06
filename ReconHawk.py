@@ -116,13 +116,17 @@ def reconocimiento_dominio(dominio, user_agent=None):
 # Escaneo de puertos usando Nmap
 def escaneo_puertos():
     print(Colores.CYAN + "[*] Iniciando escaneo de puertos en subdominios activos" + Colores.RESET)
-    nmap_cmd = "nmap -iL active_subdomains.txt -T4 -F -oN nmap_scan.txt"
 
-    try:
-        subprocess.run(nmap_cmd, shell=True, check=True)
-        print(Colores.VERDE + "[+] Escaneo de puertos completado. Resultados guardados en nmap_scan.txt" + Colores.RESET)
-    except subprocess.CalledProcessError as e:
-        print(Colores.ROJO + f"❌ Error en el escaneo de puertos: {e}" + Colores.RESET)
+    # Verificar si el archivo contiene subdominios
+    if os.path.isfile("active_subdomains.txt") and os.path.getsize("active_subdomains.txt") > 0:
+        nmap_cmd = "nmap -iL active_subdomains.txt -T4 -F -oN nmap_scan.txt"
+        try:
+            subprocess.run(nmap_cmd, shell=True, check=True)
+            print(Colores.VERDE + "[+] Escaneo de puertos completado. Resultados guardados en nmap_scan.txt" + Colores.RESET)
+        except subprocess.CalledProcessError as e:
+            print(Colores.ROJO + f"❌ Error en el escaneo de puertos: {e}" + Colores.RESET)
+    else:
+        print(Colores.ROJO + "❌ No se encontraron subdominios activos para escanear." + Colores.RESET)
 
 if __name__ == "__main__":
     imprimir_banner()  # Imprime el banner al inicio
