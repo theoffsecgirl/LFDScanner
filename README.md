@@ -54,7 +54,6 @@ pip install requests lxml
 ## Ejecutar el script:
 ```
 python3 ReconHawk.py
-
 ```
 
 ### Opciones:
@@ -63,7 +62,9 @@ python3 ReconHawk.py
 2.	Reconocimiento de subdominios: Detecta subdominios de un dominio específico y verifica cuáles están activos.
 3.	Escaneo de puertos: Realiza un escaneo de puertos en los subdominios activos utilizando Nmap.4.	Todas las anteriores: Realiza todas las tareas mencionadas anteriormente.
 
+Licencia
 
+Este proyecto está bajo la Licencia MIT.
 
 
 
