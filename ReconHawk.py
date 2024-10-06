@@ -11,6 +11,7 @@ class Colores:
     VERDE = "\033[92m"
     ROJO = "\033[91m"
     AMARILLO = "\033[93m"
+    CYAN = "\033[96m"  # Añadido el color CYAN
     RESET = "\033[0m"
 
 def imprimir_banner():
