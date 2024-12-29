@@ -1,71 +1,80 @@
-# ReconHawk
 
-## Descripción
+# 🔍 LFDScanner.py
 
-**ReconHawk** es una herramienta todo en uno para Bug Bounty Hunters, diseñada para automatizar el reconocimiento y el análisis de vulnerabilidades en sitios web. Esta herramienta simplifica las tareas clave que los cazadores de bugs necesitan, como:
+LFDScanner es un script diseñado para detectar vulnerabilidades de **Local File Disclosure (LFD)** y **Directory Traversal** en una lista de dominios. Utiliza rutas comunes para comprobar si los servidores son vulnerables. 🚀
 
-1. **Análisis de vulnerabilidades** (CSRF, SQL Injection, XSS).
-2. **Reconocimiento de subdominios** utilizando Subfinder y HTTPX.
-3. **Escaneo de puertos** utilizando Nmap.
-4. Posibilidad de utilizar un **User-Agent personalizado** para evitar bloqueos de WAF (Web Application Firewall).
+## ✨ Características
 
-## Características
+- 🖇️ Soporte para múltiples dominios desde un archivo de entrada.
+- ✅ Validación automática de URLs.
+- 🔍 Pruebas con rutas comunes de **Directory Traversal**.
+- 🛠️ Personalización del `User-Agent`.
+- 📜 Manejo detallado de errores HTTP y de conexión.
+- ⚡ Escaneo multiproceso para máxima velocidad.
+- 🎨 Interfaz colorida gracias a `colorama`.
 
-- **Análisis de vulnerabilidades**:
-  - Verifica formularios para encontrar posibles vulnerabilidades de CSRF.
-  - Envía payloads comunes para detectar posibles inyecciones SQL.
-  - Envía payloads para verificar si el sitio es vulnerable a XSS reflejado.
+## 🛠️ Instalación
 
-- **Reconocimiento de subdominios**:
-  - Usa Subfinder para detectar subdominios de un dominio específico.
-  - Verifica qué subdominios están activos usando HTTPX.
+1. Clona este repositorio o descarga el archivo `LFDScanner.py`.  
+2. Asegúrate de tener **Python 3.6+** instalado.  
+3. Instala las dependencias necesarias:
 
-- **Escaneo de puertos**:
-  - Usa Nmap para escanear los puertos abiertos en los subdominios activos.
-
-- **User-Agent personalizado**:
-  - Se puede agregar un **User-Agent** personalizado en el análisis de vulnerabilidades y en el reconocimiento de subdominios.
-
-## Requisitos
-
-- **Python 3.x**
-- **Subfinder** y **HTTPX** instalados para el reconocimiento de subdominios.
-- **Nmap** instalado para el escaneo de puertos.
-
-### Instalación de herramientas necesarias:
-
-#### Instalar Subfinder
 ```bash
-go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
-````
-#### Instalar HTTPX
-```
-go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
-```
-#### Instalar Nmap
-```
-sudo apt-get install nmap
-```
-#### Instalación de dependencias de Python
-```
-pip install requests lxml
-```
-# Uso
-## Ejecutar el script:
-```
-python3 ReconHawk.py
+pip install -r requirements.txt
 ```
 
-### Opciones:
+### 📄 Archivo `requirements.txt`
 
-1.	Análisis de vulnerabilidades en URL: Escanea una URL para verificar vulnerabilidades de CSRF, SQL Injection o XSS. Puedes seleccionar cuál o todas.
-2.	Reconocimiento de subdominios: Detecta subdominios de un dominio específico y verifica cuáles están activos.
-3.	Escaneo de puertos: Realiza un escaneo de puertos en los subdominios activos utilizando Nmap.4.	Todas las anteriores: Realiza todas las tareas mencionadas anteriormente.
+```plaintext
+requests
+colorama
+```
 
-Licencia
+## 🚀 Uso
 
-Este proyecto está bajo la Licencia MIT.
+Ejecuta el script con las siguientes opciones:
 
+```bash
+python LFDScanner.py -L <archivo_de_dominios> [-A <user_agent>] [-t <timeout>] [-c <archivo_configuración>]
+```
 
+### 🔧 Argumentos
 
+| Argumento        | Descripción                                                                                 |
+|-------------------|---------------------------------------------------------------------------------------------|
+| `-L`, `--list`    | 📂 Archivo con los dominios a escanear (uno por línea).                                     |
+| `-A`, `--agent`   | 🌐 `User-Agent` personalizado (por defecto: Mozilla/5.0 compatible).                        |
+| `-t`, `--timeout` | ⏳ Tiempo máximo en segundos para esperar respuesta del servidor (por defecto: 5).          |
+| `-c`, `--config`  | ⚙️ Archivo de configuración adicional (opcional).                                          |
 
+### 🔥 Ejemplo
+
+```bash
+python LFDScanner.py -L dominios.txt -A "CustomUserAgent/1.0" -t 10
+```
+
+## 📝 Configuración
+
+Puedes personalizar las rutas de prueba modificando esta sección del script:
+
+```python
+traversal_paths = [
+    "../../../../etc/passwd",
+    "../../../../etc/hosts",
+    "../../../../windows/win.ini",
+    "../../../../windows/system32/drivers/etc/hosts"
+]
+```
+
+## 📌 Notas
+
+- ⚠️ **Asegúrate de usar este script únicamente en dominios donde tengas permiso para realizar pruebas.**
+- 📄 Las respuestas con contenido sensible (como `/etc/passwd`) se resaltan en los logs.
+
+## 🤝 Contribuciones
+
+¡Las contribuciones son bienvenidas! 💡 Si tienes mejoras o ideas, abre un issue o envía un pull request. 🚀
+
+## 📜 Licencia
+
+Este proyecto está bajo la licencia **MIT**. 🛡️
